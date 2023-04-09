@@ -14,7 +14,8 @@ namespace MessageServiceClientApp
             InitializeComponent();
 
             instanceContext = new InstanceContext(this);
-            client = new MService.MessageServiceClient(instanceContext);
+
+            client = new MService.MessageServiceClient(instanceContext, new NetTcpBinding(), new EndpointAddress("net.tcp://127.0.0.1:8090/MessageService"));
 
             client.Join("user3");
         }
@@ -39,6 +40,7 @@ namespace MessageServiceClientApp
         private void ClientGui_FormClosing(object sender, FormClosingEventArgs e)
         {
             client.Leave("user3");
+            client.Close();
         }
 
         private void ClientGui_Load(object sender, EventArgs e)
